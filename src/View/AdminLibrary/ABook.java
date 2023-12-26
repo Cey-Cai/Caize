@@ -1,33 +1,30 @@
 package View.AdminLibrary;
 
+import Sql.SqlCon;
+
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
 import java.awt.Font;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
 
 public class ABook extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField Name;
+	private JTextField Num;
+	private JTextField Writer;
 	private JTable table;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -49,6 +46,8 @@ public class ABook extends JFrame {
 	 * Create the frame.
 	 */
 	public ABook() {
+		JOptionPane jOptionPane=new JOptionPane();
+		SqlCon sq=new SqlCon();
 		setFont(new Font("Dialog", Font.PLAIN, 30));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 855, 731);
@@ -68,19 +67,19 @@ public class ABook extends JFrame {
 		tabbedPane.addTab("\u4E66\u7C4D\u6DFB\u52A0", null, panel_1, null);
 		panel_1.setLayout(null);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(161, 44, 211, 51);
-		panel_1.add(textField_1);
-		textField_1.setColumns(1);
+		Name = new JTextField();
+		Name.setBounds(161, 44, 211, 51);
+		panel_1.add(Name);
+		Name.setColumns(1);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(1);
-		textField_2.setBounds(161, 122, 211, 52);
-		panel_1.add(textField_2);
+		Num = new JTextField();
+		Num.setColumns(1);
+		Num.setBounds(161, 122, 211, 52);
+		panel_1.add(Num);
 		
 		JLabel lblNewLabel = new JLabel("\u4E66\u540D");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 30));
-		lblNewLabel.setBounds(26, 39, 81, 51);
+		lblNewLabel.setBounds(39, 44, 81, 46);
 		panel_1.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("\u4E66\u7C4D\u7F16\u53F7");
@@ -90,13 +89,43 @@ public class ABook extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("\u4F5C\u8005");
 		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 30));
-		lblNewLabel_2.setBounds(26, 199, 81, 51);
+		lblNewLabel_2.setBounds(39, 204, 81, 51);
 		panel_1.add(lblNewLabel_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(1);
-		textField_3.setBounds(161, 204, 211, 51);
-		panel_1.add(textField_3);
+		Writer = new JTextField();
+		Writer.setColumns(1);
+		Writer.setBounds(161, 204, 211, 51);
+		panel_1.add(Writer);
+		JLabel Cate = new JLabel("\u7C7B\u522B");
+		Cate.setFont(new Font("宋体", Font.PLAIN, 30));
+		Cate.setBounds(39, 284, 81, 51);
+		panel_1.add(Cate);
+
+		textField = new JTextField();
+		textField.setColumns(1);
+		textField.setBounds(161, 284, 211, 51);
+		panel_1.add(textField);
+		
+		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String s1=Name.getText();
+				String s2=Num.getText() ;
+				String s3=Writer.getText();
+				String s4=textField.getText();
+				String string="INSERT into library.Book(BNum,BName,Writer,Cate)values(" + '\'' + s1 + '\'' + "," + '\'' + s2 + '\'' + "," + '\'' + s3 + '\''+","+'\''+s4+'\''+")";
+				sq.InsertCon(string);
+				jOptionPane.showMessageDialog(null,"添加成功","书籍添加", WARNING_MESSAGE);
+				jOptionPane.setVisible(true);
+
+			}
+		});
+		btnNewButton_1.setBackground(new Color(255, 128, 64));
+		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 20));
+		btnNewButton_1.setBounds(174, 387, 164, 69);
+		panel_1.add(btnNewButton_1);
+		
+
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setToolTipText("");
