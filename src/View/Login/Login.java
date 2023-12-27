@@ -85,6 +85,10 @@ public class Login extends JFrame {
                     if (UserButton.isSelected()) {
                         if (sqlCon.SelectCon(string).next()) {
                             try {
+                                String string3="在线";
+                                String s4="离线";
+                                String string2="Update  set USet='"+string3+"'  where USet='"+s4+"'+AND UNum='"+s1+"';";
+                                sqlCon.UpdateCon(string2);
                                 dispose();
                                 Library frame = new Library();
                                 frame.setVisible(true);
@@ -144,11 +148,6 @@ public class Login extends JFrame {
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-                String s1 = NumText.getText();
-                String s2 = NameText.getText();
-                String string = "INSERT INTO library.user(UNum,Uname,password)VALUES(" + '\'' + s1 + '\'' + "," + '\'' + s2 + '\'' + "," + '\'' + s1 + '\'' + ")";
-                System.out.println("添加成功");
-                sqlCon.InsertCon(string);
             }
         });
         btnNewButton_1_1.setBackground(new Color(255, 255, 255));
