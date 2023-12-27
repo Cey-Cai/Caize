@@ -22,8 +22,8 @@ public class BookSystem extends JFrame {
     private final JPanel contentPane;
     private final JTextField textField;
     private final JTable table;
-    List<Book> list = new ArrayList<Book>();
     private final JPanel panel_1;
+    List<Book> list = new ArrayList<Book>();
 
 
     /**
@@ -81,41 +81,30 @@ public class BookSystem extends JFrame {
         panel_1 = new JPanel();
         panel_1.setBackground(new Color(192, 192, 192));
         panel_1.setToolTipText("\u5206\u7C7B\u5BFC\u822A");
-        panel_1.setBounds(49, 129, 771, 240);
+        panel_1.setBounds(49, 129, 771, 139);
         contentPane.add(panel_1);
         panel_1.setLayout(null);
         JRadioButton button1 = new JRadioButton("\u6587\u5B66");
         JRadioButton button2 = new JRadioButton("\u7ECF\u6D4E");
-        JRadioButton button3 = new JRadioButton("\u54F2\u5B66\u3001\u5B97\u6559");
+        JRadioButton button3 = new JRadioButton("\u54F2\u5B66");
 
-        JRadioButton button4 = new JRadioButton("\u8BED\u8A00\u3001\u6587\u5B66");
+        JRadioButton button4 = new JRadioButton("\u8BED\u8A00");
         buttonGroup.add(button1);
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                button1.setEnabled(false);
-                button3.setEnabled(true);
-                button2.setEnabled(true);
-                button4.setEnabled(true);
                 String s1 = "文学";
                 String s = "Select * from book where Cate='" + s1 + "';";
                 ResultSet rs = sqlCon.SelectCon(s);
                 try {
                     while (rs.next()) {
-                        Book book;
-                        book = new Book(rs.getString("BName"), rs.getString("BNum"), rs.getString("Writer"), rs.getString("BSet"));
-                        list.add(book);
                         DefaultTableModel tableModel = new DefaultTableModel(head, 0);
-                        for (Book book1 : list) {
-                            Vector<Object> row = new Vector<>();
-                            row.add(rs.getString("BName"));
-                            row.add(rs.getString("BNum"));
-                            row.add(rs.getString("Writer"));
-                            row.add(rs.getString("BSet"));
-                            tableModel.addRow(row);
-                        }
+                        Vector<Object> row = new Vector<>();
+                        row.add(rs.getString("BName"));
+                        row.add(rs.getString("BNum"));
+                        row.add(rs.getString("Writer"));
+                        row.add(rs.getString("BSet"));
+                        tableModel.addRow(row);
                         table.setModel(tableModel);
-                        button1.setEnabled(false);
-
                     }
                 } catch (SQLException e2) {
                     e2.printStackTrace();
@@ -142,26 +131,52 @@ public class BookSystem extends JFrame {
         buttonGroup.add(button2);
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                button1.setEnabled(true);
-                button3.setEnabled(true);
-                button2.setEnabled(false);
-                button4.setEnabled(true);
-
+                String s1 = "经济";
+                String s = "Select * from book where Cate='" + s1 + "';";
+                ResultSet rs = sqlCon.SelectCon(s);
+                try {
+                    while (rs.next()) {
+                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
+                        Vector<Object> row = new Vector<>();
+                        row.add(rs.getString("BName"));
+                        row.add(rs.getString("BNum"));
+                        row.add(rs.getString("Writer"));
+                        row.add(rs.getString("BSet"));
+                        tableModel.addRow(row);
+                        table.setModel(tableModel);
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
             }
         });
-        button2.setBounds(10, 76, 127, 23);
+        button2.setBounds(139, 51, 127, 23);
         panel_1.add(button2);
 
 
         buttonGroup.add(button3);
-        button3.setBounds(10, 101, 127, 23);
+        button3.setBounds(268, 51, 127, 23);
         panel_1.add(button3);
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                button1.setEnabled(true);
-                button2.setEnabled(true);
-                button3.setEnabled(false);
-                button4.setEnabled(true);
+                String s1 = "哲学";
+                String s = "Select * from book where Cate='" + s1 + "';";
+                ResultSet rs = sqlCon.SelectCon(s);
+                try {
+                    while (rs.next()) {
+                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
+                        Vector<Object> row = new Vector<>();
+                        row.add(rs.getString("BName"));
+                        row.add(rs.getString("BNum"));
+                        row.add(rs.getString("Writer"));
+                        row.add(rs.getString("BSet"));
+                        tableModel.addRow(row);
+                        table.setModel(tableModel);
+
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
             }
         });
 
@@ -169,65 +184,28 @@ public class BookSystem extends JFrame {
         buttonGroup.add(button4);
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                button1.setEnabled(true);
-                button3.setEnabled(true);
-                button2.setEnabled(true);
-                button4.setEnabled(false);
+                String s1 = "语言";
+                String s = "Select * from book where Cate='" + s1 + "';";
+                ResultSet rs = sqlCon.SelectCon(s);
+                try {
+                    while (rs.next()) {
+                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
+                        Vector<Object> row = new Vector<>();
+                        row.add(rs.getString("BName"));
+                        row.add(rs.getString("BNum"));
+                        row.add(rs.getString("Writer"));
+                        row.add(rs.getString("BSet"));
+                        tableModel.addRow(row);
+                        table.setModel(tableModel);
+
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
             }
         });
-        button4.setBounds(10, 126, 127, 23);
+        button4.setBounds(397, 51, 127, 23);
         panel_1.add(button4);
-
-        JRadioButton rdbtnNewRadioButton_4 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_4);
-        rdbtnNewRadioButton_4.setBounds(10, 151, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_4);
-
-        JRadioButton rdbtnNewRadioButton_5 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_5);
-        rdbtnNewRadioButton_5.setBounds(10, 176, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_5);
-
-        JRadioButton rdbtnNewRadioButton_6 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_6);
-        rdbtnNewRadioButton_6.setBounds(10, 201, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_6);
-
-        JRadioButton rdbtnNewRadioButton_7 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_7);
-        rdbtnNewRadioButton_7.setBackground(new Color(255, 255, 255));
-        rdbtnNewRadioButton_7.setBounds(139, 51, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_7);
-
-        JRadioButton rdbtnNewRadioButton_8 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_8);
-        rdbtnNewRadioButton_8.setBounds(139, 76, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_8);
-
-        JRadioButton rdbtnNewRadioButton_9 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_9);
-        rdbtnNewRadioButton_9.setBounds(139, 101, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_9);
-
-        JRadioButton rdbtnNewRadioButton_10 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_10);
-        rdbtnNewRadioButton_10.setBounds(139, 126, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_10);
-
-        JRadioButton rdbtnNewRadioButton_11 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_11);
-        rdbtnNewRadioButton_11.setBounds(139, 151, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_11);
-
-        JRadioButton rdbtnNewRadioButton_12 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_12);
-        rdbtnNewRadioButton_12.setBounds(139, 176, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_12);
-
-        JRadioButton rdbtnNewRadioButton_13 = new JRadioButton("New radio button");
-        buttonGroup.add(rdbtnNewRadioButton_13);
-        rdbtnNewRadioButton_13.setBounds(139, 201, 127, 23);
-        panel_1.add(rdbtnNewRadioButton_13);
 
 
         JButton btnNewButton_2 = new JButton("\u8FD4\u56DE");
@@ -236,7 +214,6 @@ public class BookSystem extends JFrame {
         btnNewButton_2.setFont(new Font("宋体", Font.PLAIN, 20));
         btnNewButton_2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 dispose();
                 try {
                     Library frame = new Library();
@@ -246,29 +223,36 @@ public class BookSystem extends JFrame {
                 }
             }
         });
-        btnNewButton_2.setBounds(826, 27, 111, 74);
+        btnNewButton_2.setBounds(825, 27, 100, 65);
         contentPane.add(btnNewButton_2);
 
         JButton btnNewButton_3 = new JButton("Borrow");
+        btnNewButton_3.setBackground(new Color(255, 128, 64));
         btnNewButton_3.setFont(new Font("宋体", Font.PLAIN, 20));
         btnNewButton_3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                JOptionPane jOptionPane = new JOptionPane();
+                JOptionPane.showMessageDialog(null, "租借成功");
             }
         });
-        btnNewButton_3.setBounds(59, 705, 181, 40);
+        btnNewButton_3.setBounds(144, 670, 181, 40);
         contentPane.add(btnNewButton_3);
 
         JButton btnNewButton_3_1 = new JButton("Return");
+        btnNewButton_3_1.setBackground(new Color(255, 128, 64));
         btnNewButton_3_1.setFont(new Font("宋体", Font.PLAIN, 20));
         btnNewButton_3_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                JOptionPane jOptionPane = new JOptionPane();
+                JOptionPane.showMessageDialog(null, "归还成功");
             }
         });
-        btnNewButton_3_1.setBounds(461, 705, 181, 40);
+        btnNewButton_3_1.setBounds(514, 670, 181, 40);
         contentPane.add(btnNewButton_3_1);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(49, 379, 771, 316);
+        scrollPane.setBounds(49, 290, 771, 350);
         contentPane.add(scrollPane);
         scrollPane.setWheelScrollingEnabled(false);
 
