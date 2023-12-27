@@ -87,7 +87,7 @@ public class Login extends JFrame {
                             try {
                                 String string3="‘⁄œﬂ";
                                 String s4="¿Îœﬂ";
-                                String string2="Update  set USet='"+string3+"'  where USet='"+s4+"'+AND UNum='"+s1+"';";
+                                String string2="Update user set USet='"+string3+"'  where USet='"+s4+"'AND UNum='"+s1+"';";
                                 sqlCon.UpdateCon(string2);
                                 dispose();
                                 Library frame = new Library();
@@ -96,7 +96,7 @@ public class Login extends JFrame {
                                 e2.printStackTrace();
                             }
                         } else {
-                            dispose();
+
                             try {
                                 Login2 frame = new Login2();
                                 frame.setVisible(true);

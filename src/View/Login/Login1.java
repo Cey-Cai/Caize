@@ -66,7 +66,7 @@ public class Login1 extends JFrame {
         contentPane.add(lblNewLabel_2);
         btnNewButton_1 = new JButton("\u6CE8\u518C");
         btnNewButton_1.setBackground(new Color(255, 128, 64));
-        btnNewButton_1.setBounds(122, 307, 165, 48);
+        btnNewButton_1.setBounds(272, 305, 165, 48);
         contentPane.add(btnNewButton_1);
         
         JLabel lblNewLabel_3 = new JLabel("\u8D26\u53F7");
@@ -78,6 +78,22 @@ public class Login1 extends JFrame {
         Num.setColumns(10);
         Num.setBounds(120, 62, 232, 30);
         contentPane.add(Num);
+        
+        JButton btnNewButton_1_1 = new JButton("\u8FD4\u56DE");
+        btnNewButton_1_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        		try {
+                    Login frame = new Login();
+                    frame.setVisible(true);
+                } catch (Exception e0) {
+                    e0.printStackTrace();
+                }
+        	}
+        });
+        btnNewButton_1_1.setBackground(new Color(255, 128, 64));
+        btnNewButton_1_1.setBounds(55, 305, 165, 48);
+        contentPane.add(btnNewButton_1_1);
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
