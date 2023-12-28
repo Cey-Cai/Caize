@@ -254,18 +254,17 @@ public class BookSystem extends JFrame {
                 int column=table.getSelectedColumn();
                 String s1= table.getModel().getValueAt(row,column).toString();
                 String s2=table.getModel().getColumnName(column);
-                String s="Select BSet from book where '"+s2+"'='"+s1+"' ";
-                ResultSet resultSet = sqlCon.SelectCon(s);
-                JOptionPane jOptionPane1=new JOptionPane();
+                String s="Select BSet from book where BNum ='"+s1+"'";
+                ResultSet rs=sqlCon.SelectCon(s);
                 switch (i){
                     case 0:
-                        try {
-                            if (resultSet.getString("BSet").equals("在线")){
-                            JOptionPane.showMessageDialog(null,"租借成功");
-                            }
-                            else {
-                               JOptionPane.showMessageDialog(null,"该书已被借出");
-                            }
+                        try {if (rs.next()) {
+                            if (!rs.getString("BSet").equals("在线")) {
+                                JOptionPane.showMessageDialog(null, "租借成功");
+                            } else
+                                JOptionPane.showMessageDialog(null, "该书已被借出");
+
+                        }
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -283,7 +282,7 @@ public class BookSystem extends JFrame {
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setColumnSelectionAllowed(true);
         table.setModel(tableModel);
-        
+
         JLabel lblNewLabel_1 = new JLabel("\u53CC\u51FB\u4E66\u7C4D\u6240\u5728\u884C\uFF0C\u5373\u53EF\u501F\u8FD8");
         lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 30));
         lblNewLabel_1.setBounds(59, 650, 758, 74);

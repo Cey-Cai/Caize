@@ -37,12 +37,7 @@ public class Login2 extends JFrame {
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                try {
-                    Login frame = new Login();
-                    frame.setVisible(true);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+
             }
         });
     }

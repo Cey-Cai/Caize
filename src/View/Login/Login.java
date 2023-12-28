@@ -132,12 +132,6 @@ public class Login extends JFrame {
         btnNewButton_1.setBounds(45, 323, 180, 44);
         contentPane.add(btnNewButton_1);
 
-        JLabel lblNewLabel_3 = new JLabel("×¢²áÊ±µÄ³õÊ¼ÃÜÂëÎªÕËºÅ");
-        lblNewLabel_3.setFont(new Font("????", Font.PLAIN, 18));
-        lblNewLabel_3.setBounds(341, 192, 221, 44);
-        contentPane.add(lblNewLabel_3);
-
-
         JButton btnNewButton_1_1 = new JButton("×¢²á");
         btnNewButton_1_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
