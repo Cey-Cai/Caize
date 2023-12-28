@@ -9,18 +9,19 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BookSystem extends JFrame {
 
+    @Serial
     private static final long serialVersionUID = 1L;
-    private final ButtonGroup buttonGroup = new ButtonGroup();
-    private final JPanel contentPane;
-    private final JTextField textField;
     private final JTable table;
     private final JPanel panel_1;
     List<Book> list = new ArrayList<Book>();
@@ -37,7 +38,7 @@ public class BookSystem extends JFrame {
         setBackground(new Color(0, 128, 98));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 961, 803);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBackground(new Color(128, 128, 128));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -56,7 +57,7 @@ public class BookSystem extends JFrame {
         comboBox.setBounds(25, 10, 94, 54);
         panel.add(comboBox);
 
-        textField = new JTextField();
+        JTextField textField = new JTextField();
         textField.setBounds(139, 10, 151, 54);
         panel.add(textField);
         textField.setColumns(10);
@@ -89,6 +90,7 @@ public class BookSystem extends JFrame {
         JRadioButton button3 = new JRadioButton("\u54F2\u5B66");
 
         JRadioButton button4 = new JRadioButton("\u8BED\u8A00");
+        ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(button1);
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -124,7 +126,7 @@ public class BookSystem extends JFrame {
         panel_1.add(lblNewLabel);
 
 
-        button1.setBounds(10, 51, 127, 23);
+        button1.setBounds(141, 51, 127, 23);
         panel_1.add(button1);
 
 
@@ -150,12 +152,12 @@ public class BookSystem extends JFrame {
                 }
             }
         });
-        button2.setBounds(139, 51, 127, 23);
+        button2.setBounds(270, 51, 127, 23);
         panel_1.add(button2);
 
 
         buttonGroup.add(button3);
-        button3.setBounds(268, 51, 127, 23);
+        button3.setBounds(399, 51, 127, 23);
         panel_1.add(button3);
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -204,10 +206,91 @@ public class BookSystem extends JFrame {
                 }
             }
         });
-        button4.setBounds(397, 51, 127, 23);
+        button4.setBounds(528, 51, 127, 23);
         panel_1.add(button4);
+        
+        JRadioButton button1_1 = new JRadioButton("\u5168\u90E8");
+        buttonGroup.add(button1_1);
+        button1_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                String s = "Select * from book ";
+                ResultSet rs = sqlCon.SelectCon(s);
+                try {
+                    while (rs.next()) {
+                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
+                        Vector<Object> row = new Vector<>();
+                        row.add(rs.getString("BName"));
+                        row.add(rs.getString("BNum"));
+                        row.add(rs.getString("Writer"));
+                        row.add(rs.getString("BSet"));
+                        tableModel.addRow(row);
+                        table.setModel(tableModel);
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        });
+        button1_1.setBounds(10, 51, 127, 23);
+        panel_1.add(button1_1);
 
 
+        JButton btnNewButton_2 = getjButton();
+        contentPane.add(btnNewButton_2);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setWheelScrollingEnabled(false);
+        scrollPane.setBounds(49, 290, 771, 350);
+        contentPane.add(scrollPane);
+
+        table = new JTable();
+        table.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		JOptionPane jOptionPane=new JOptionPane();
+                String []options={"Borrow","Close"};
+                int i = JOptionPane.showOptionDialog(null, "您要进行的操作", "书籍借还", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                int row=table.getSelectedRow();
+                int column=table.getSelectedColumn();
+                String s1= table.getModel().getValueAt(row,column).toString();
+                String s2=table.getModel().getColumnName(column);
+                String s="Select BSet from book where '"+s2+"'='"+s1+"' ";
+                ResultSet resultSet = sqlCon.SelectCon(s);
+                JOptionPane jOptionPane1=new JOptionPane();
+                switch (i){
+                    case 0:
+                        try {
+                            if (resultSet.getString("BSet").equals("在线")){
+                            JOptionPane.showMessageDialog(null,"租借成功");
+                            }
+                            else {
+                               JOptionPane.showMessageDialog(null,"该书已被借出");
+                            }
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        break;
+                    case 1:
+                        jOptionPane.setVisible(false);
+                        break;
+                }
+            }
+        });
+        table.setSize(new Dimension(0, 30));
+        scrollPane.setViewportView(table);
+        table.setCellSelectionEnabled(true);
+        table.setFont(new Font("宋体", Font.PLAIN, 15));
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.setColumnSelectionAllowed(true);
+        table.setModel(tableModel);
+        
+        JLabel lblNewLabel_1 = new JLabel("\u53CC\u51FB\u4E66\u7C4D\u6240\u5728\u884C\uFF0C\u5373\u53EF\u501F\u8FD8");
+        lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 30));
+        lblNewLabel_1.setBounds(59, 650, 758, 74);
+        contentPane.add(lblNewLabel_1);
+    }
+
+    private JButton getjButton() {
         JButton btnNewButton_2 = new JButton("\u8FD4\u56DE");
         btnNewButton_2.setBackground(new Color(255, 128, 64));
         btnNewButton_2.setForeground(new Color(0, 0, 0));
@@ -224,46 +307,7 @@ public class BookSystem extends JFrame {
             }
         });
         btnNewButton_2.setBounds(825, 27, 100, 65);
-        contentPane.add(btnNewButton_2);
-
-        JButton btnNewButton_3 = new JButton("Borrow");
-        btnNewButton_3.setBackground(new Color(255, 128, 64));
-        btnNewButton_3.setFont(new Font("宋体", Font.PLAIN, 20));
-        btnNewButton_3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                JOptionPane jOptionPane = new JOptionPane();
-                JOptionPane.showMessageDialog(null, "租借成功");
-            }
-        });
-        btnNewButton_3.setBounds(144, 670, 181, 40);
-        contentPane.add(btnNewButton_3);
-
-        JButton btnNewButton_3_1 = new JButton("Return");
-        btnNewButton_3_1.setBackground(new Color(255, 128, 64));
-        btnNewButton_3_1.setFont(new Font("宋体", Font.PLAIN, 20));
-        btnNewButton_3_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane jOptionPane = new JOptionPane();
-                JOptionPane.showMessageDialog(null, "归还成功");
-            }
-        });
-        btnNewButton_3_1.setBounds(514, 670, 181, 40);
-        contentPane.add(btnNewButton_3_1);
-
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(49, 290, 771, 350);
-        contentPane.add(scrollPane);
-        scrollPane.setWheelScrollingEnabled(false);
-
-        table = new JTable();
-        table.setSize(new Dimension(0, 30));
-        scrollPane.setViewportView(table);
-        table.setCellSelectionEnabled(true);
-        table.setFont(new Font("宋体", Font.PLAIN, 15));
-        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table.setColumnSelectionAllowed(true);
-        table.setModel(tableModel);
+        return btnNewButton_2;
     }
 
 
