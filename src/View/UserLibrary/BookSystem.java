@@ -137,8 +137,8 @@ public class BookSystem extends JFrame {
                 String s = "Select * from book where Cate='" + s1 + "';";
                 ResultSet rs = sqlCon.SelectCon(s);
                 try {
+                    DefaultTableModel tableModel = new DefaultTableModel(head, rs.getRow());
                     while (rs.next()) {
-                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
                         Vector<Object> row = new Vector<>();
                         row.add(rs.getString("BName"));
                         row.add(rs.getString("BNum"));
@@ -165,8 +165,8 @@ public class BookSystem extends JFrame {
                 String s = "Select * from book where Cate='" + s1 + "';";
                 ResultSet rs = sqlCon.SelectCon(s);
                 try {
+                    DefaultTableModel tableModel = new DefaultTableModel(head, rs.getRow());
                     while (rs.next()) {
-                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
                         Vector<Object> row = new Vector<>();
                         row.add(rs.getString("BName"));
                         row.add(rs.getString("BNum"));
@@ -190,8 +190,8 @@ public class BookSystem extends JFrame {
                 String s = "Select * from book where Cate='" + s1 + "';";
                 ResultSet rs = sqlCon.SelectCon(s);
                 try {
+                    DefaultTableModel tableModel = new DefaultTableModel(head, rs.getRow());
                     while (rs.next()) {
-                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
                         Vector<Object> row = new Vector<>();
                         row.add(rs.getString("BName"));
                         row.add(rs.getString("BNum"));
@@ -215,9 +215,10 @@ public class BookSystem extends JFrame {
         	public void actionPerformed(ActionEvent e) {
                 String s = "Select * from book ";
                 ResultSet rs = sqlCon.SelectCon(s);
+
                 try {
+                    DefaultTableModel tableModel = new DefaultTableModel(head, rs.getRow());
                     while (rs.next()) {
-                        DefaultTableModel tableModel = new DefaultTableModel(head, 0);
                         Vector<Object> row = new Vector<>();
                         row.add(rs.getString("BName"));
                         row.add(rs.getString("BNum"));
@@ -253,17 +254,18 @@ public class BookSystem extends JFrame {
                 int row=table.getSelectedRow();
                 int column=table.getSelectedColumn();
                 String s1= table.getModel().getValueAt(row,column).toString();
-                String s2=table.getModel().getColumnName(column);
                 String s="Select BSet from book where BNum ='"+s1+"'";
                 ResultSet rs=sqlCon.SelectCon(s);
+                String s3="离馆";
+                String string="Update book set BSet='"+s3+"' ";
                 switch (i){
                     case 0:
                         try {if (rs.next()) {
-                            if (!rs.getString("BSet").equals("在线")) {
+                            if (rs.getString("BSet").equals("在线")) {
                                 JOptionPane.showMessageDialog(null, "租借成功");
+                                sqlCon.UpdateCon(string);
                             } else
                                 JOptionPane.showMessageDialog(null, "该书已被借出");
-
                         }
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
